@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class TriggerSound : MonoBehaviour
 {
-    [SerializeField]
-    public AudioSource Sound;
+    public GameObject randomAmbiente;
+    private int random;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -20,9 +21,10 @@ public class TriggerSound : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        random = Random.Range(0, 2);
         if (other.CompareTag("Player"))
         {
-            Sound.Play();
+            randomAmbiente.GetComponents<AudioSource>()[random].Play();
         }
     }
 
@@ -30,7 +32,7 @@ public class TriggerSound : MonoBehaviour
     {
         if(other.CompareTag("Player"))
         {
-            Sound.Stop();
+            randomAmbiente.GetComponents<AudioSource>()[random].Stop();
         }
     }
 }

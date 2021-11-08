@@ -9,6 +9,7 @@ TagManager:
   - Puertas
   - Enemy
   - Pared
+  - Puzzles
   layers:
   - Default
   - TransparentFX
@@ -19,7 +20,7 @@ TagManager:
   - Player
   - Enemy
   - Pared
-  - 
+  - TriggerVictoria
   - 
   - 
   - 

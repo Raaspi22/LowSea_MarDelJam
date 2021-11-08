@@ -27,6 +27,10 @@ public class MovementPlayer : MonoBehaviour
     [SerializeField]
     private Rigidbody _myRigiBody;
 
+    public GameObject managerAuidoPasos;
+    private int random;
+    private bool hayPasosSonando = false;
+
     #endregion
 
     #endregion
@@ -36,7 +40,7 @@ public class MovementPlayer : MonoBehaviour
 
         if (_myRigiBody == null)
         {
-        
+                    
             _myRigiBody = GetComponent<Rigidbody>();
         
         }        
@@ -57,7 +61,7 @@ public class MovementPlayer : MonoBehaviour
 
     public void Agacharse()
     {        
-        camara.transform.position = new Vector3(camara.transform.position.x, 0.75f , camara.transform.position.z);
+        camara.transform.position = new Vector3(camara.transform.position.x, 1f , camara.transform.position.z);
         linterna.transform.position = new Vector3(linterna.transform.position.x, 0.5f, linterna.transform.position.z);
         this.gameObject.GetComponent<CapsuleCollider>().height = 1.782709f / 2;        
     }
@@ -88,6 +92,18 @@ public class MovementPlayer : MonoBehaviour
 
         _myRigiBody.velocity = transform.TransformDirection(velocity);
 
+        if(!hayPasosSonando)
+        {
+            random = UnityEngine.Random.Range(0, 7);
+            managerAuidoPasos.GetComponents<AudioSource>()[random].Play();
+            hayPasosSonando = true;
+        }
+
+        if(!managerAuidoPasos.GetComponents<AudioSource>()[random].isPlaying)
+        {
+            hayPasosSonando = false;
+        }
+
     }   
 
     public void DejeDeMoverme()
@@ -97,9 +113,8 @@ public class MovementPlayer : MonoBehaviour
             _isMoving = false;
             onMovement(false);
         }
-
+        managerAuidoPasos.GetComponents<AudioSource>()[random].Stop();
         movementSpeed = 0f;
-
         //_audioManager.DejeDeCaminar();
     }
     

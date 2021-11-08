@@ -5,11 +5,20 @@ using UnityEngine;
 public class Puertas : MonoBehaviour
 {
     public GameObject pivot;
+    public float ejeY;
+    public float anguloRotacion;
+    public Animator myAnimator;
+    public bool deboAbrir = false;
+    public GameObject colliderPuerta;
+    public GameObject sonidoPuerta;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        if(myAnimator == null)
+        {
+            myAnimator = gameObject.GetComponent<Animator>();            
+        }
     }
 
     // Update is called once per frame
@@ -18,18 +27,18 @@ public class Puertas : MonoBehaviour
         
     }
 
-    void AbrirPuerta()
+    public void AbrirPuerta()
     {
-        if (pivot.transform.rotation.y < 100f)
-        {
-            pivot.transform.rotation = new Quaternion(0, 100f, 0, 0);
-        }
-        
+        deboAbrir = true;
+        myAnimator.SetBool("Abrir", deboAbrir);
+        sonidoPuerta.GetComponents<AudioSource>()[0].Play();
     }
 
-    void CerrarPuerta()
+    public void CerrarPuerta()
     {
-        pivot.transform.rotation = new Quaternion(0, 0, 0, 0);
+        deboAbrir = false;
+        myAnimator.SetBool("Abrir", deboAbrir);
+        colliderPuerta.SetActive(true);
     }
 
     private void OnTriggerStay(Collider other)
@@ -38,8 +47,7 @@ public class Puertas : MonoBehaviour
         {
             if(Input.GetKey(KeyCode.E))
             {
-                AbrirPuerta();
-                
+                AbrirPuerta();                
             }
         }
     }
@@ -51,4 +59,9 @@ public class Puertas : MonoBehaviour
             CerrarPuerta();
         }
     }
+
+    private void PowerOffCollider()
+    {
+        colliderPuerta.SetActive(false);
+    } 
 }

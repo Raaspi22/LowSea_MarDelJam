@@ -31,11 +31,6 @@ public class EnemyManager : MonoBehaviour
 
     void PlayerMovementChange(bool playerIsMoving)
     {
-        if (playerIsMoving)
-            Debug.Log("Me muevo");
-        else
-        {
-
-        }
+        
     }
 }
